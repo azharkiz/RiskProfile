@@ -14,14 +14,19 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+use_modular_headers! 
 target 'RiskProfile' do
   config = use_native_modules!
-
+  pod 'FirebaseCore', :modular_headers => true;
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  pod 'Firebase/Core', '~> 10.29.0'
+  pod 'Firebase/Auth', '~> 10.29.0'
 
   target 'RiskProfileTests' do
     inherit! :complete
